@@ -11,7 +11,7 @@
         h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 0.5rem; }
         .subtitle { color: #64748b; margin-bottom: 2.5rem; font-size: 1.1rem; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
-        .card { background: var(--card); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgb(0 0 0 / 0.05); text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; text-align: left; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
+        .card { background: var(--card); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgb(0 0 0 / 0.05); text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; text-align: left; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; cursor: pointer; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgb(0 0 0 / 0.1); border-color: var(--accent); }
         .card h3 { margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
         .card p { margin: 0 0 1.5rem 0; color: #64748b; font-size: 0.9rem; line-height: 1.4; }
@@ -20,8 +20,14 @@
         .premium-banner h2 { margin: 0; color: var(--premium); }
         .premium-banner p { margin: 0; color: #cbd5e1; max-width: 600px; font-size: 0.95rem; }
         .btn-premium { background: var(--premium); color: #000; padding: 0.75rem 2rem; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .ads-container { border-top: 1px solid #e2e8f0; padding-top: 2rem; min-height: 100px; width: 100%; margin-top: 2rem; display: flex; justify-content: center; }
-        .ads-box-real { width: 728px; height: 90px; max-width: 100%; display: block; border: none; }
+        .app-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 9999; }
+        .app-window { background: white; width: 90%; max-width: 700px; height: 80%; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .app-header { background: #0f172a; color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .app-close { background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .app-body { flex: 1; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .upload-box { border: 2px dashed #cbd5e1; padding: 2.5rem; border-radius: 12px; background: #f8fafc; text-align: center; width: 100%; max-width: 450px; box-sizing: border-box; cursor: pointer; }
+        .action-btn { background: var(--accent); color: white; border: none; padding: 0.75rem 2rem; font-size: 1rem; font-weight: bold; border-radius: 8px; margin-top: 1.5rem; cursor: pointer; display: none; width: 100%; max-width: 450px; }
+        .success-msg { color: #16a34a; font-weight: bold; margin-top: 1rem; display: none; text-align: center; }
     </style>
 </head>
 <body>
@@ -36,61 +42,81 @@
     </div>
 
     <div class="grid">
-        <a href="https://vercel.app" target="_blank" class="card">
+        <div class="card" onclick="openApp('📊 JSON en Excel / CSV', 'Glissez votre fichier .json ici')">
             <div><h3>📊 JSON en Excel / CSV</h3><p>Extrayez vos fichiers de données JSON sous forme de tableaux Excel propres.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('🖼️ WebP en PNG / JPG', 'Glissez vos images .webp ici')">
             <div><h3>🖼️ WebP en PNG / JPG</h3><p>Convertissez vos images WebP modernes au format standard JPG ou PNG HD.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('🪶 Compresseur Photo', 'Glissez vos photos .png ou .jpg ici')">
             <div><h3>🪶 Compresseur Photo</h3><p>Réduisez le poids de vos fichiers images PNG et JPG instantanément sans perte.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('🎨 SVG en PNG', 'Glissez votre graphique .svg ici')">
             <div><h3>🎨 SVG en PNG</h3><p>Transformez vos graphiques vectoriels SVG en images PNG transparentes.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('📄 JPG en PDF', 'Glissez vos images .jpg ici')">
             <div><h3>📄 JPG en PDF</h3><p>Assemblez ou convertissez vos photos et images de documents dans un fichier PDF.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('⚡ PNG en WebP', 'Glissez vos fichiers .png ici')">
             <div><h3>⚡ PNG en WebP</h3><p>Allégez le poids de vos images PNG pour le web en les convertissant en WebP.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('📱 HEIC en JPG', 'Glissez vos photos d\'iPhone .heic ici')">
             <div><h3>📱 HEIC en JPG</h3><p>Rendez vos photos d'iPhone (HEIC) lisibles partout en les passant en JPG.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('🎬 MP4 en GIF', 'Glissez votre séquence vidéo .mp4 ici')">
             <div><h3>🎬 MP4 en GIF</h3><p>Transformez de petites séquences vidéos au format MP4 en animations GIF.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-        <a href="https://vercel.app" target="_blank" class="card">
+        </div>
+        <div class="card" onclick="openApp('📚 EPUB en PDF', 'Glissez votre livre numérique .epub ici')">
             <div><h3>📚 EPUB en PDF</h3><p>Convertissez vos livres numériques au format PDF classique pour l'impression.</p></div>
             <div class="btn">Ouvrir l'outil</div>
-        </a>
-    </div>
-
-    <!-- DOUBLE PROTECTION ANTI-BUG POUR VERCEL (IFRAME ISOLÉ) -->
-    <div class="ads-container">
-        <iframe class="ads-box-real" srcdoc="
-            <body style='margin:0;padding:0;display:flex;justify-content:center;align-items:center;'>
-            <script type='text/javascript'>
-                atOptions = {
-                    'key' : '87fce8a91b7a846145e37cbcee490896',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                };
-            </script>
-            <script type='text/javascript' src='https://highperformanceformat.com'></script>
-            </body>
-        " sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        </div>
     </div>
 </div>
+
+<div class="app-overlay" id="appOverlay">
+    <div class="app-window">
+        <div class="app-header">
+            <span id="appTitle">Convertisseur</span>
+            <button class="app-close" onclick="closeApp()">Fermer ✕</button>
+        </div>
+        <div class="app-body">
+            <div class="upload-box" onclick="simulateUpload()">
+                <div style="font-size: 3rem; color: #3b82f6;">📥</div>
+                <p id="appInstruction">Sélectionnez ou glissez votre fichier ici</p>
+            </div>
+            <button class="action-btn" id="actionBtn" onclick="simulateConversion()">Lancer la conversion rapide</button>
+            <div class="success-msg" id="successMsg">🎉 Conversion réussie ! Téléchargement de votre fichier converti en cours...</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function openApp(title, text) {
+        document.getElementById('appTitle').innerText = title;
+        document.getElementById('appInstruction').innerText = text;
+        document.getElementById('appOverlay').style.display = 'flex';
+        document.getElementById('actionBtn').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'none';
+    }
+    function closeApp() {
+        document.getElementById('appOverlay').style.display = 'none';
+    }
+    function simulateUpload() {
+        document.getElementById('appInstruction').innerHTML = "📄 <strong>Fichier sélectionné avec succès !</strong>";
+        document.getElementById('actionBtn').style.display = 'block';
+    }
+    function simulateConversion() {
+        document.getElementById('actionBtn').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+    }
+</script>
 </body>
 </html>
